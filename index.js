@@ -2,10 +2,10 @@ import wordBank from "./word-bank.js";
 import prompt from "readline-sync";
 console.log("\nWelcome to Hangman!\nPress ctrl+c to stop\n");
 
-// Function to check if a letter is present in the word
+// Check if a letter is in the solution
 const isLetterInWord = (letter, word) => word.includes(letter);
 
-// Function to display the word with guessed letters
+// Display the word with guessed letters
 const displayWord = (word, guessedLetters) => {
     return word.split('').map(char => guessedLetters.includes(char) ? char : '_').join(' ');
 };
@@ -13,13 +13,13 @@ const displayWord = (word, guessedLetters) => {
 // Main game function
 const playGame = (wordBank) => {
     const hangman = [
-        "  +---+\n  |   |\n      |\n      |\n      |\n      |\n=========",
-        "  +---+\n  |   |\n  O   |\n      |\n      |\n      |\n=========",
-        "  +---+\n  |   |\n  O   |\n  |   |\n      |\n      |\n=========",
-        "  +---+\n  |   |\n  O   |\n /|   |\n      |\n      |\n=========",
-        "  +---+\n  |   |\n  O   |\n /|\\  |\n      |\n      |\n=========",
-        "  +---+\n  |   |\n  O   |\n /|\\  |\n /    |\n      |\n=========",
-        "  +---+\n  |   |\n  O   |\n /|\\  |\n / \\  |\n      |\n========="
+        "  +---+\n  |   |\n      |\n      |\n      |\n      |\n_________",
+        "  +---+\n  |   |\n  O   |\n      |\n      |\n      |\n_________",
+        "  +---+\n  |   |\n  O   |\n  |   |\n      |\n      |\n_________",
+        "  +---+\n  |   |\n  O   |\n /|   |\n      |\n      |\n_________",
+        "  +---+\n  |   |\n  O   |\n /|\\  |\n      |\n      |\n_________",
+        "  +---+\n  |   |\n  O   |\n /|\\  |\n /    |\n      |\n_________",
+        "  +---+\n  |   |\n  O   |\n /|\\  |\n / \\  |\n      |\n_________"
     ];
 
     // Select a random word from the word bank
@@ -40,24 +40,24 @@ const playGame = (wordBank) => {
     while (isGameRunning) {
         // Display hangman and the word with guessed letters
         console.log(hangman[incorrectGuesses]);
-        console.log('Word: ' + displayWord(selectedWord, guessedLetters));
+        console.log('Solution: ' + displayWord(selectedWord, guessedLetters));
 
-        // Prompt user for input
+        // Prompt user
         const guess = prompt.question('Guess a letter: ').toLowerCase();
 
-        // Check if the guess is valid (a single letter)
+        // Check if the guess is a letter
         if (!/^[a-zA-Z]$/.test(guess)) {
-            console.log('Please enter a single letter.');
+            console.log('Please enter a valid letter in either upper or lowercase.');
             continue;
         }
 
         // Check if the letter has already been guessed
         if (guessedLetters.includes(guess)) {
-            console.log('You already guessed that letter.');
+            console.log('You have guessed that letter before. Try again!');
             continue;
         }
 
-        // Add the guessed letter to the list
+        // Add the guessed letter to the list of guesses
         guessedLetters.push(guess);
 
         // Check if the guessed letter is in the word
@@ -73,7 +73,7 @@ const playGame = (wordBank) => {
         if (incorrectGuesses >= 6) {
           console.log('Game over! The word was: ' + selectedWord + "\nWould you like to play agin? If so, run node . again!");
           isGameRunning = false;
-        } if(correctGuesses === wordLength){
+        } if (correctGuesses === wordLength){
             console.log('Congratulations! You guessed the word: ' + selectedWord + "\nWould you like to play agin? If so, run node . again!");
             isGameRunning = false;
         }
