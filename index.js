@@ -45,7 +45,7 @@ const playGame = (wordBank) => {
         // Prompt user
         const guess = prompt.question('Guess a letter: ').toLowerCase();
 
-        // Check if the guess is a letter
+        // use Regex to check if the guess is a letter
         if (!/^[a-zA-Z]$/.test(guess)) {
             console.log('Please enter a valid letter in either upper or lowercase.');
             continue;
